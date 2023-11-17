@@ -17,7 +17,7 @@ function Profile() {
         setResult(res);
       })
       .catch((res) => console.log(res));
-  }, [uid]);
+  }, []);
   return (
     <div>
       <Card

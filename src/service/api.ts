@@ -38,7 +38,6 @@ export async function login(option: LoginStruct): Promise<User> {
 export async function profile(option: ProfileStruct): Promise<Profile> {
   // 需要验证的实例
   try {
-    if (option.uid === undefined) return Promise.reject('uid错误');
     const headers = { Authorization: 'Bearer ' + option.token };
     const response = await axios.post<ProfileResponse>(
       '/user/profile',
