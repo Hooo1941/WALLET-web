@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import * as API from '../service/api';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
