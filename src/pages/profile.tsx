@@ -9,14 +9,10 @@ import Stack from '@mui/material/Stack';
 
 function Profile() {
   const [result, setResult] = useState<Profile>();
-  const { uid } = useParams();
-  // console.log(props.location);
-  // const query = new URLSearchParams(props.location);
   useEffect(() => {
     const token = localStorage.getItem('token');
     API.profile({
       token: token == null ? '' : token,
-      uid: uid === undefined || uid === null ? 0 : +uid,
     })
       .then((res) => {
         setResult(res);

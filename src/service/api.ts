@@ -34,3 +34,24 @@ export async function login(option: LoginStruct): Promise<User> {
     return Promise.reject(error);
   }
 }
+
+export async function profile(option: ProfileStruct): Promise<Profile> {
+  // 需要验证的实例
+  try {
+    if (option.uid === undefined) return Promise.reject('uid错误');
+    const headers = { Authorization: 'Bearer ' + option.token };
+    const response = await axios.post<ProfileResponse>(
+      '/user/profile',
+      option,
+      {
+        headers: headers,
+      }
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.code !== 0 || response.data.body === undefined)
+      return Promise.reject(response.data.msg ?? '服务器错误');
+    return response.data.body;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
