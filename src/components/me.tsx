@@ -28,11 +28,6 @@ function Me() {
     location.href = '/#/profile';
   };
 
-  const handleManage = () => {
-    setAnchorEl(null);
-    location.href = '/#/admin';
-  };
-
   const handleLogout = () => {
     setAnchorEl(null);
     localStorage.removeItem('token');
