@@ -1,59 +1,125 @@
 import { useState, useEffect } from 'react';
 import * as API from '../service/api';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import { deepOrange } from '@mui/material/colors';
-import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+type baseUser = {
+  name?: string;
+  ssn?: string;
+  balance?: number;
+  phoneNumber?: string;
+  password?: string;
+};
 
 function Profile() {
-  const [result, setResult] = useState<Profile>();
+  const uid = localStorage.getItem('uid');
+  const [result, setResult] = useState<baseUser>();
+  const [oldPassword, setOldPassword] = useState<string>('');
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    API.profile({
-      token: token == null ? '' : token,
-    })
-      .then((res) => {
-        setResult(res);
-      })
-      .catch((res) => console.log(res));
+    setResult({ name: 'test', ssn: '123', balance: 100.0, phoneNumber: '1' });
+    // API.profile({
+    //   token: token == null ? '' : token,
+    // })
+    //   .then((res) => {
+    //     setResult(res);
+    //   })
+    //   .catch((res) => console.log(res));
   }, []);
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    if (name === 'ssn' || name === 'balance') return;
+    setResult((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSumbit = () => {
+    API.updateUserInfo({
+      user_id: +uid!,
+      name: result?.name,
+      oldPassword: oldPassword,
+      newPassword: result?.password,
+    })
+      .then((res) => console.log(res))
+      .catch((res) => console.log(res));
+  };
+
   return (
     <div>
-      <Card
-        sx={{
-          display: 'flex',
-          height: 300,
-          marginTop: 12,
-          marginLeft: 5,
-          marginRight: 5,
-        }}
-      >
-        <CardContent sx={{ flex: 1, alignSelf: 'flex-end' }}>
-          <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-            <Avatar
-              sx={{
-                bgcolor: deepOrange[500],
-                marginRight: 2,
-                width: 56,
-                height: 56,
-              }}
-            >
-              {result?.nick_name[0]}
-            </Avatar>
-            <span
-              style={{
-                fontSize: 20,
-                fontWeight: 700,
-                color: 'white',
-                textShadow: 'black 0.1em 0.1em 0.2em',
-              }}
-            >
-              {result?.nick_name}
-            </span>
-          </Stack>
-        </CardContent>
-      </Card>
+      <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
+        <Typography variant="h5" gutterBottom>
+          用户信息
+        </Typography>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSumbit();
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                label="姓名"
+                variant="outlined"
+                fullWidth
+                name="name"
+                value={result?.name}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="SSN"
+                variant="outlined"
+                fullWidth
+                name="ssn"
+                value={result?.ssn}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="余额"
+                variant="outlined"
+                fullWidth
+                name="balance"
+                value={result?.balance}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="手机号"
+                variant="outlined"
+                fullWidth
+                name="phoneNumber"
+                value={result?.phoneNumber}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="新密码"
+                variant="outlined"
+                fullWidth
+                name="password"
+                value={result?.password}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Button type="submit" variant="contained" color="primary">
+                修改信息
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Paper>
     </div>
   );
 }
