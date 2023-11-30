@@ -42,15 +42,17 @@ function Index() {
           </Button>
         </Grid>
         <Grid item xs={4} sx={{ textAlign: 'center' }}>
-          <Button size="large" href="/#/transaction" variant="contained">
-            账单查询
-          </Button>
-        </Grid>
-        {/* <Grid item xs={4} sx={{'textAlign': 'center'}}>
-          <Button size="large" href="/#/transaction" variant="contained">
+          <Button
+            size="large"
+            variant="contained"
+            onClick={() => {
+              localStorage.removeItem('uid');
+              location.reload();
+            }}
+          >
             注销账户
           </Button>
-        </Grid> */}
+        </Grid>
       </Grid>
     </div>
   );

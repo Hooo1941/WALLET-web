@@ -11,10 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Alert from '@mui/material/Alert';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import Error from '../components/error';
 import * as API from '../service/api';
 
 function Copyright() {
@@ -55,7 +52,7 @@ export default function Login() {
           location.href = '/';
         })
         .catch((err) => {
-          setAlert(err);
+          setAlert(err.toString());
         });
     else
       API.loginByPhone(senddata)
@@ -65,33 +62,14 @@ export default function Login() {
           location.href = '/';
         })
         .catch((err) => {
-          setAlert(err);
+          setAlert(err.toString());
         });
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <Collapse in={alert !== ''}>
-          <Alert
-            severity="error"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => {
-                  setAlert('');
-                }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-            sx={{ mb: 2 }}
-          >
-            {alert}
-          </Alert>
-        </Collapse>
+        <Error alert={alert} setAlert={setAlert} />
         <CssBaseline />
         <Box
           sx={{

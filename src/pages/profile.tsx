@@ -5,10 +5,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import Collapse from '@mui/material/Collapse';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
+import Error from '../components/error';
+import Container from '@mui/material/Container';
 
 type baseUser = {
   name?: string;
@@ -63,27 +61,8 @@ function Profile() {
   };
 
   return (
-    <div>
-      <Collapse in={alert !== ''}>
-        <Alert
-          severity="error"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setAlert('');
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-          sx={{ mb: 2 }}
-        >
-          {alert}
-        </Alert>
-      </Collapse>
+    <Container maxWidth="md">
+      <Error alert={alert} setAlert={setAlert} />
       <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
         <Typography variant="h5" gutterBottom>
           钱包信息
@@ -177,7 +156,7 @@ function Profile() {
           查看银行卡
         </Button>
       </Paper>
-    </div>
+    </Container>
   );
 }
 
