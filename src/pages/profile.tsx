@@ -5,6 +5,10 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 type baseUser = {
   name?: string;
@@ -17,6 +21,7 @@ type baseUser = {
 function Profile() {
   const uid = localStorage.getItem('uid');
   if (uid === null) return <div>未登录</div>;
+  const [alert, setAlert] = useState<string>('');
   const [result, setResult] = useState<baseUser>();
   const [oldPassword, setOldPassword] = useState<string>('');
   useEffect(() => {
@@ -34,7 +39,7 @@ function Profile() {
           phoneNumber: res.users[0].phoneNumber,
         });
       })
-      .catch((res) => console.log(res));
+      .catch((res) => setAlert(res.toString()));
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,11 +59,31 @@ function Profile() {
       newPassword: result?.password,
     })
       .then((res) => console.log(res))
-      .catch((res) => console.log(res));
+      .catch((res) => setAlert(res.toString()));
   };
 
   return (
     <div>
+      <Collapse in={alert !== ''}>
+        <Alert
+          severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setAlert('');
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+          {alert}
+        </Alert>
+      </Collapse>
       <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
         <Typography variant="h5" gutterBottom>
           钱包信息
@@ -117,6 +142,7 @@ function Profile() {
                 variant="outlined"
                 fullWidth
                 name="password"
+                type="password"
                 value={result?.password}
                 onChange={handleChange}
               />
