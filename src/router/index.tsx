@@ -5,6 +5,9 @@ const Login = loadable(() => import('../pages/login'));
 const Register = loadable(() => import('../pages/register'));
 const Page404 = loadable(() => import('../pages/page404'));
 const Profile = loadable(() => import('../pages/profile'));
+const Email = loadable(() => import('../pages/email'));
+const Bankcard = loadable(() => import('../pages/bankcard'));
+
 const router = createHashRouter([
   {
     path: '/',
@@ -21,6 +24,14 @@ const router = createHashRouter([
   {
     path: '/Profile/',
     element: <Profile />,
+  },
+  {
+    path: '/Email/',
+    element: <Email />,
+  },
+  {
+    path: '/Bankcard/',
+    element: <Bankcard />,
   },
   {
     path: '*',

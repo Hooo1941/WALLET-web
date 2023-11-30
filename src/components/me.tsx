@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import PersonIcon from '@mui/icons-material/Person';
@@ -9,12 +9,8 @@ import MenuItem from '@mui/material/MenuItem';
 function Me() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const username = localStorage.getItem('username') ?? '';
-  const isLogined = username !== '';
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token === null) return;
-  }, []);
+  const uid = localStorage.getItem('uid') ?? '';
+  const isLogined = uid !== '';
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -30,17 +26,14 @@ function Me() {
 
   const handleLogout = () => {
     setAnchorEl(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('nickname');
+    localStorage.removeItem('uid');
     location.href = '/';
   };
 
   if (isLogined)
-    // TODO: token time error...
     return (
       <div>
-        <Tooltip title={username}>
+        <Tooltip title={'已登录'}>
           <IconButton
             color="inherit"
             aria-controls={open ? 'basic-menu' : undefined}
@@ -60,7 +53,7 @@ function Me() {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleProfile}>个人资料</MenuItem>
+          <MenuItem onClick={handleProfile}>钱包信息</MenuItem>
           <MenuItem onClick={handleLogout}>注销</MenuItem>
         </Menu>
       </div>

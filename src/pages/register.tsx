@@ -43,17 +43,18 @@ export default function Register() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const senddata: RegisterStruct = {
-      username: data.get('username')?.toString(),
-      nickname: data.get('nickname')?.toString(),
+      name: data.get('name')?.toString(),
       password: data.get('password')?.toString(),
+      ssn: data.get('ssn')?.toString(),
+      phone: data.get('phone')?.toString(),
+      email_address: data.get('email_address')?.toString(),
+      is_email_verified: 'true',
+      is_phone_verified: 'true',
     };
     console.log(senddata);
     API.register(senddata)
       .then((res) => {
-        // login success
-        localStorage.setItem('token', res);
-        localStorage.setItem('username', senddata.username ?? '');
-        localStorage.setItem('nickname', senddata.nickname ?? ''); // save userdata to localstorage
+        localStorage.setItem('uid', res.toString());
         location.href = '/';
       })
       .catch((err) => {
@@ -110,18 +111,30 @@ export default function Register() {
                 <TextField
                   required
                   fullWidth
-                  id="nickname"
-                  label="昵称"
-                  name="nickname"
+                  id="name"
+                  label="用户名"
+                  name="name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField required fullWidth id="ssn" label="SSN" name="ssn" />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phone"
+                  label="手机号"
+                  name="phone"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="username"
-                  label="用户名"
-                  name="username"
+                  id="email_address"
+                  label="邮箱地址"
+                  name="email_address"
                 />
               </Grid>
               <Grid item xs={12}>

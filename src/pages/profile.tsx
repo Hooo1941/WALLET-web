@@ -16,20 +16,28 @@ type baseUser = {
 
 function Profile() {
   const uid = localStorage.getItem('uid');
+  if (uid === null) return <div>未登录</div>;
   const [result, setResult] = useState<baseUser>();
   const [oldPassword, setOldPassword] = useState<string>('');
   useEffect(() => {
     setResult({ name: 'test', ssn: '123', balance: 100.0, phoneNumber: '1' });
-    // API.profile({
-    //   token: token == null ? '' : token,
-    // })
-    //   .then((res) => {
-    //     setResult(res);
-    //   })
-    //   .catch((res) => console.log(res));
+    setOldPassword('123');
+    API.profile({
+      user_id: +uid,
+    })
+      .then((res) => {
+        setOldPassword(res.users[0].password);
+        setResult({
+          name: res.users[0].name,
+          ssn: res.users[0].ssn,
+          balance: res.users[0].balance,
+          phoneNumber: res.users[0].phoneNumber,
+        });
+      })
+      .catch((res) => console.log(res));
   }, []);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'ssn' || name === 'balance') return;
     setResult((prevData) => ({
@@ -40,7 +48,7 @@ function Profile() {
 
   const handleSumbit = () => {
     API.updateUserInfo({
-      user_id: +uid!,
+      user_id: +(uid ?? '0'),
       name: result?.name,
       oldPassword: oldPassword,
       newPassword: result?.password,
@@ -53,8 +61,9 @@ function Profile() {
     <div>
       <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
         <Typography variant="h5" gutterBottom>
-          用户信息
+          钱包信息
         </Typography>
+        <br />
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -112,13 +121,35 @@ function Profile() {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid
+              item
+              xs={6}
+              sx={{ alignSelf: 'center', alignContent: 'center' }}
+            >
               <Button type="submit" variant="contained" color="primary">
                 修改信息
               </Button>
             </Grid>
           </Grid>
         </form>
+        <br />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          href="/#/email"
+        >
+          查看邮箱
+        </Button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          href="/#/bankcard"
+        >
+          查看银行卡
+        </Button>
       </Paper>
     </div>
   );

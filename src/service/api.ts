@@ -119,3 +119,17 @@ export async function updatePhoneInfo(
     return Promise.reject(error);
   }
 }
+
+export async function profile(option: ProfileStruct): Promise<Profile> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<ProfileResponse>('/profile', option);
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}

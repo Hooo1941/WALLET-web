@@ -1,49 +1,57 @@
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { useState, useEffect } from 'react';
 function Index() {
-  const [nickname, setNickname] = useState('');
-  useEffect(() => {
-    setNickname(localStorage.getItem('nickname') ?? '');
-  }, []);
-  const username = localStorage.getItem('username') ?? '';
-  const isLogined = username !== '';
+  const isLogined = localStorage.getItem('uid') ?? '' !== '';
   if (!isLogined)
     return (
       <div>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          欢迎使用 WALLET
+          欢迎使用 WALLET，请先登录或注册
         </Typography>
       </div>
     );
   return (
     <div>
       <Typography variant="h4" sx={{ mb: 5 }}>
-        欢迎使用 WALLET {', ' + nickname}
+        欢迎使用 WALLET
       </Typography>
-      <Button href="/#/profile" variant="contained">
-        账户信息
-      </Button>
-      <Button href="/#/send" variant="contained">
-        转账
-      </Button>
-      <Button href="/#/request" variant="contained">
-        收款
-      </Button>
-      <Button href="/#/statement" variant="contained">
-        收支统计
-      </Button>
-      <Button href="/#/transaction" variant="contained">
-        账单查询
-      </Button>
-      <Button href="/#/transaction" variant="contained">
-        注销账户
-      </Button>
-      Send money (send money to a phone number or email address) Request money
-      (request money from phone numbers and email addresses) Statements (total
-      amount sent and received per month) Search Transactions (based on user
-      SSN, email address, phone number, type of transaction, time_date range
-      etc.)
+      <Grid container spacing={2}>
+        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+          <Button size="large" href="/#/profile" variant="contained">
+            钱包信息
+          </Button>
+        </Grid>
+        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+          <Button size="large" href="/#/send" variant="contained">
+            转账
+          </Button>
+        </Grid>
+        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+          <Button size="large" href="/#/request" variant="contained">
+            收款
+          </Button>
+        </Grid>
+        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+          <Button size="large" href="/#/statement" variant="contained">
+            收支统计
+          </Button>
+        </Grid>
+        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+          <Button size="large" href="/#/transaction" variant="contained">
+            账单查询
+          </Button>
+        </Grid>
+        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+          <Button size="large" href="/#/transaction" variant="contained">
+            账单查询
+          </Button>
+        </Grid>
+        {/* <Grid item xs={4} sx={{'textAlign': 'center'}}>
+          <Button size="large" href="/#/transaction" variant="contained">
+            注销账户
+          </Button>
+        </Grid> */}
+      </Grid>
     </div>
   );
 }

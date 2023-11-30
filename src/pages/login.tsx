@@ -43,21 +43,30 @@ export default function Login() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const senddata: LoginStruct = {
-      username: data.get('username')?.toString(),
+      info: data.get('info')?.toString(),
       password: data.get('password')?.toString(),
     };
     console.log(senddata);
-    API.login(senddata)
-      .then((res) => {
-        // login success
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('username', senddata.username ?? ''); // save userdata to localstorage
-        localStorage.setItem('nickname', res.nickname);
-        location.href = '/';
-      })
-      .catch((err) => {
-        setAlert(err);
-      });
+    if (senddata.info?.includes('@'))
+      API.loginByEmail(senddata)
+        .then((res) => {
+          // login success
+          localStorage.setItem('uid', res.toString());
+          location.href = '/';
+        })
+        .catch((err) => {
+          setAlert(err);
+        });
+    else
+      API.loginByPhone(senddata)
+        .then((res) => {
+          // login success
+          localStorage.setItem('uid', res.toString());
+          location.href = '/';
+        })
+        .catch((err) => {
+          setAlert(err);
+        });
   };
 
   return (
@@ -108,9 +117,9 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="用户名"
-              name="username"
+              id="info"
+              label="手机号或邮箱"
+              name="info"
               autoFocus
             />
             <TextField
@@ -132,7 +141,7 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              登录
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

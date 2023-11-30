@@ -21,13 +21,6 @@ type LoginStruct = {
 
 type TokenResponse = APIResponse<number>; // Register and login
 
-type User = {
-  nickname: string;
-  token: string;
-};
-
-type UserResponse = APIResponse<User>;
-
 type updateUserInfoStruct = {
   user_id?: number;
   name?: string;
