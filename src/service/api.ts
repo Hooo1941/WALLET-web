@@ -171,3 +171,41 @@ export async function removeBankInfo(
     return Promise.reject(error);
   }
 }
+
+export async function getAccountByUserId(
+  option: ProfileStruct
+): Promise<getAccountByUserId> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<getAccountByUserIdResponse>(
+      '/getAccountByUserId',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function changePrimaryAccount(
+  option: changePrimaryAccountStruct
+): Promise<changePrimaryAccount> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<changePrimaryAccountResponse>(
+      '/changePrimaryAccount',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}

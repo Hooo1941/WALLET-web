@@ -11,12 +11,12 @@ import {
   TableCell,
   IconButton,
   Paper,
-  Grid,
-  TextField,
   Button,
+  Tooltip,
 } from '@mui/material';
 import Error from '../components/error';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FlagIcon from '@mui/icons-material/Flag';
 
 export default function Bankcard() {
   const uid = localStorage.getItem('uid');
@@ -46,7 +46,30 @@ export default function Bankcard() {
         setOldPassword(res.users[0].password);
       })
       .catch((res) => setAlert(res.toString()));
+    API.getAccountByUserId({
+      user_id: +uid,
+    })
+      .then((res) => {
+        setBankAccounts(res.accounts);
+      })
+      .catch((res) => setAlert(res.toString()));
   }, []);
+
+  const handleChangePrimary = (account_id: number, index: number) => {
+    API.changePrimaryAccount({
+      user_id: +uid,
+      primary_account_id: account_id,
+      password: oldPassword,
+    })
+      .then((res) => {
+        console.log(res);
+        const updated = [...bankAccounts];
+        updated.forEach((account) => (account.primary = false));
+        updated[index].primary = true;
+        setBankAccounts(updated);
+      })
+      .catch((res) => setAlert(res.toString()));
+  };
 
   const handleDelete = (account_id: number, index: number) => {
     API.removeBankInfo({
@@ -102,12 +125,24 @@ export default function Bankcard() {
                       {account.joint ? '是' : '否'}
                     </TableCell>
                     <TableCell sx={{ textAlign: 'center' }}>
-                      <IconButton
-                        color="secondary"
-                        onClick={() => handleDelete(account.accountId, index)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title={'设为主账户'} arrow>
+                        <IconButton
+                          color="secondary"
+                          onClick={() =>
+                            handleChangePrimary(account.accountId, index)
+                          }
+                        >
+                          <FlagIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title={'删除卡'} arrow>
+                        <IconButton
+                          color="secondary"
+                          onClick={() => handleDelete(account.accountId, index)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 ))}
