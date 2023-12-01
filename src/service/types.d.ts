@@ -355,3 +355,15 @@ type queryRequest = {
 };
 
 type queryRequestResponse = APIResponse<Array<queryRequest>>;
+
+// 付款
+type contributeStruct = {
+  user_id: number;
+  contribution_id: number;
+  memo?: string;
+  password?: string;
+  isPayByWallet?: boolean;
+};
+
+// 成功返回空数据
+type contributeResponse = APIResponse<object>;
