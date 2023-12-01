@@ -302,3 +302,53 @@ type transactionBestSeller = {
 };
 
 type transactionBestSellerResponse = APIResponse<transactionBestSeller>;
+
+// 发起群收款
+// 发送数据
+// 一个群收款有多个contribution
+type contributionStruct = {
+  // 只会发送下列两个字段之一
+  sender_phone_number?: string;
+  sender_email?: string;
+  contribution_amount: number;
+};
+
+type requestStruct = {
+  user_id: number;
+  total_amount: number;
+  memo: string;
+  contributions: Array<contributionStruct>;
+};
+
+// 若群收款成功，只需要返回空对象{}，失败返回错误信息
+type requestResponse = APIResponse<object>;
+
+// 查询我发起的所有群收款
+type allRequestStruct = {
+  user_id: number;
+};
+
+// 返回的数据
+type searchRequest = {
+  request_id: number;
+  total_amount: number;
+  memo?: string;
+  request_time: Date;
+};
+type allRequestResponse = APIResponse<Array<searchRequest>>;
+
+// 查询指定id的群收款
+type queryRequestStruct = {
+  request_id: number;
+};
+
+// 返回的数据
+type queryRequest = {
+  contribution_id: number;
+  // 二选一返回给我
+  sender_phone_number?: string;
+  sender_email?: string;
+  transaction_id: number;
+  contribution_amount: number;
+  is_contributed: boolean;
+};
