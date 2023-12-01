@@ -22,6 +22,7 @@ function Profile() {
   const [alert, setAlert] = useState<string>('');
   const [result, setResult] = useState<baseUser>();
   const [oldPassword, setOldPassword] = useState<string>('');
+  const [oldPhone, setOldPhone] = useState<string>('');
   useEffect(() => {
     setResult({ name: 'test', ssn: '123', balance: 100.0, phoneNumber: '1' });
     setOldPassword('123');
@@ -36,6 +37,7 @@ function Profile() {
           balance: res.users[0].balance,
           phoneNumber: res.users[0].phoneNumber,
         });
+        setOldPhone(res.users[0].phoneNumber);
       })
       .catch((res) => setAlert(res.toString()));
   }, []);
@@ -56,7 +58,29 @@ function Profile() {
       oldPassword: oldPassword,
       newPassword: result?.password,
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        API.updatePhoneInfo({
+          user_id: +(uid ?? '0'),
+          phone_number: oldPhone,
+          password: result?.password,
+          isAddPhone: 'false',
+          is_phone_verified: 'true',
+          is_phone_registered: 'true',
+        });
+      })
+      .then((res) => {
+        console.log(res);
+        setAlert('修改成功');
+        API.updatePhoneInfo({
+          user_id: +(uid ?? '0'),
+          phone_number: result?.phoneNumber,
+          password: result?.password,
+          isAddPhone: 'true',
+          is_phone_verified: 'true',
+          is_phone_registered: 'true',
+        });
+      })
       .catch((res) => setAlert(res.toString()));
   };
 
