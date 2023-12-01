@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as API from '../service/api';
 import {
   Container,
@@ -151,8 +151,7 @@ export default function Bankcard() {
           </TableContainer>
           <br />
           <Button variant="contained" color="primary" href="#/addcard">
-            {' '}
-            绑定新卡{' '}
+            绑定新卡
           </Button>
         </Paper>
       </Container>

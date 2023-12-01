@@ -8,6 +8,7 @@ const Profile = loadable(() => import('../pages/profile'));
 const Email = loadable(() => import('../pages/email'));
 const Bankcard = loadable(() => import('../pages/bankcard'));
 const Addcard = loadable(() => import('../pages/addcard'));
+const Send = loadable(() => import('../pages/send'));
 
 const router = createHashRouter([
   {
@@ -38,7 +39,10 @@ const router = createHashRouter([
     path: '/Addcard/',
     element: <Addcard />,
   },
-
+  {
+    path: '/Send/',
+    element: <Send />,
+  },
   {
     path: '*',
     element: <Page404 />,
