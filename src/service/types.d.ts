@@ -356,6 +356,24 @@ type queryRequest = {
 
 type queryRequestResponse = APIResponse<Array<queryRequest>>;
 
+// 查看需要我付的群收款(已经付过的也要显示)
+type needRequestStruct = {
+  user_id: number;
+};
+
+// 返回的数据
+type needRequest = {
+  request_id: number;
+  contribution_id: number;
+  // 收款人
+  name: string;
+  // 个人需要付的钱
+  contribution_amount: number;
+  memo?: string;
+  request_time: Date;
+};
+type needRequestResponse = APIResponse<Array<needRequest>>;
+
 // 付款
 type contributeStruct = {
   user_id: number;
