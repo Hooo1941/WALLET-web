@@ -303,6 +303,7 @@ type transactionBestSeller = {
 
 type transactionBestSellerResponse = APIResponse<transactionBestSeller>;
 
+// TODO: 以下是群收款的接口
 // 发起群收款
 // 发送数据
 // 一个群收款有多个contribution
@@ -352,3 +353,5 @@ type queryRequest = {
   contribution_amount: number;
   is_contributed: boolean;
 };
+
+type queryRequestResponse = APIResponse<Array<queryRequest>>;
