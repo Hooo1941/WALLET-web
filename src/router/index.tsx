@@ -10,6 +10,7 @@ const Bankcard = loadable(() => import('../pages/bankcard'));
 const Addcard = loadable(() => import('../pages/addcard'));
 const Send = loadable(() => import('../pages/send'));
 const Transaction = loadable(() => import('../pages/transaction'));
+const Statement = loadable(() => import('../pages/statement'));
 
 const router = createHashRouter([
   {
@@ -48,6 +49,11 @@ const router = createHashRouter([
     path: '/Transaction/',
     element: <Transaction />,
   },
+  {
+    path: '/Statement/',
+    element: <Statement />,
+  },
+
   {
     path: '*',
     element: <Page404 />,
