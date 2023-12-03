@@ -416,7 +416,9 @@ export async function request(option: requestStruct): Promise<void> {
   }
 }
 
-export async function allRequest(option: requestStruct): Promise<allRequest> {
+export async function allRequest(
+  option: allRequestStruct
+): Promise<allRequest> {
   try {
     if (option.user_id === undefined)
       return Promise.reject('登录状态失效，请重新登录');

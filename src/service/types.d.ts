@@ -325,12 +325,12 @@ type queryRequestStruct = {
 };
 
 // 返回的数据
-type contributionRequest = {
+type contribution_id = {
   contribution_id: number;
   // 二选一返回给我
   sender_phone_number?: string;
   sender_email?: string;
-  transaction_id: number;
+  transaction_id?: number;
   contribution_amount: number;
   is_contributed: boolean;
 };
