@@ -11,6 +11,7 @@ const Addcard = loadable(() => import('../pages/addcard'));
 const Send = loadable(() => import('../pages/send'));
 const Transaction = loadable(() => import('../pages/transaction'));
 const Statement = loadable(() => import('../pages/statement'));
+const Request = loadable(() => import('../pages/request'));
 
 const router = createHashRouter([
   {
@@ -53,7 +54,10 @@ const router = createHashRouter([
     path: '/Statement/',
     element: <Statement />,
   },
-
+  {
+    path: '/Request/',
+    element: <Request />,
+  },
   {
     path: '*',
     element: <Page404 />,

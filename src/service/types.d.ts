@@ -315,7 +315,9 @@ type searchRequest = {
   memo?: string;
   request_time: number;
 };
-type allRequestResponse = APIResponse<Array<searchRequest>>;
+
+type allRequest = Array<searchRequest>;
+type allRequestResponse = APIResponse<allRequest>;
 
 // 查询指定id的群收款
 type queryRequestStruct = {
@@ -323,7 +325,7 @@ type queryRequestStruct = {
 };
 
 // 返回的数据
-type queryRequest = {
+type contributionRequest = {
   contribution_id: number;
   // 二选一返回给我
   sender_phone_number?: string;
@@ -333,7 +335,8 @@ type queryRequest = {
   is_contributed: boolean;
 };
 
-type queryRequestResponse = APIResponse<Array<queryRequest>>;
+type queryRequest = Array<contributionRequest>;
+type queryRequestResponse = APIResponse<queryRequest>;
 
 // 查看需要我付的群收款(已经付过的也要显示)
 type needRequestStruct = {
@@ -341,7 +344,7 @@ type needRequestStruct = {
 };
 
 // 返回的数据
-type needRequest = {
+type requestContribution = {
   request_id: number;
   contribution_id: number;
   // 收款人
@@ -351,7 +354,9 @@ type needRequest = {
   memo?: string;
   request_time: number;
 };
-type needRequestResponse = APIResponse<Array<needRequest>>;
+
+type needRequest = Array<requestContribution>;
+type needRequestResponse = APIResponse<needRequest>;
 
 // 付款
 type contributeStruct = {

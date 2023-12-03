@@ -402,3 +402,85 @@ export async function transactionBestSeller(
     return Promise.reject(error);
   }
 }
+
+export async function request(option: requestStruct): Promise<void> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<requestResponse>('/request', option);
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0) return Promise.reject('服务器错误');
+    return;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function allRequest(option: requestStruct): Promise<allRequest> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<allRequestResponse>(
+      '/allRequest',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject('服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function queryRequest(
+  option: queryRequestStruct
+): Promise<queryRequest> {
+  try {
+    const response = await axios.post<queryRequestResponse>(
+      '/queryRequest',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject('服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function needRequest(
+  option: needRequestStruct
+): Promise<needRequest> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<needRequestResponse>(
+      '/needRequest',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject('服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function contribute(option: contributeStruct): Promise<void> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<contributeResponse>(
+      '/contribute',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0) return Promise.reject('服务器错误');
+    return;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
