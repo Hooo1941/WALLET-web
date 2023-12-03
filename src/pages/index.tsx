@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material';
+import { Button, Container, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 function Index() {
   const isLogined = localStorage.getItem('uid') ?? '' !== '';
@@ -11,37 +11,47 @@ function Index() {
       </div>
     );
   return (
-    <div>
+    <Container sx={{ maxWidth: 'md' }}>
       <Typography variant="h4" sx={{ mb: 5 }}>
         欢迎使用 WALLET
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
           <Button size="large" href="/#/profile" variant="contained">
-            钱包信息
+            钱包与个人信息
           </Button>
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
           <Button size="large" href="/#/send" variant="contained">
-            转账
+            给他人转账
           </Button>
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
           <Button size="large" href="/#/request" variant="contained">
-            收款
+            发起群收款
           </Button>
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
+          <Button size="large" href="/#/myrequest" variant="contained">
+            查看发起的群收款
+          </Button>
+        </Grid>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
+          <Button size="large" href="/#/payrequest" variant="contained">
+            需要支付的群收款
+          </Button>
+        </Grid>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
           <Button size="large" href="/#/statement" variant="contained">
-            收支统计
+            月度收支统计
           </Button>
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
           <Button size="large" href="/#/transaction" variant="contained">
-            账单查询
+            详细账单查询
           </Button>
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: 'center' }}>
+        <Grid item xs={3} sx={{ textAlign: 'center' }}>
           <Button
             size="large"
             variant="contained"
@@ -50,11 +60,11 @@ function Index() {
               location.reload();
             }}
           >
-            注销账户
+            退出WALLET
           </Button>
         </Grid>
       </Grid>
-    </div>
+    </Container>
   );
 }
 

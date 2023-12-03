@@ -29,11 +29,7 @@ export default function Email() {
   const [alert, setAlert] = useState<string>('');
   const [newEmail, setNewEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
-  const [emails, setEmails] = useState([
-    { emailAddress: 'example1@example.com', emailVerified: true },
-    { emailAddress: 'example2@example.com', emailVerified: false },
-    { emailAddress: 'example3@example.com', emailVerified: true },
-  ]);
+  const [emails, setEmails] = useState<email[]>([]);
   // const [emails, setEmails] = useState<Array<email>>([]);
 
   useEffect(() => {
@@ -42,13 +38,15 @@ export default function Email() {
       user_id: +uid,
     })
       .then((res) => {
-        setOldPassword(res.users[0].password);
-        res.users.forEach((e) => {
-          emails.push({
+        const retemails: email[] = [];
+        setOldPassword(res[0].password);
+        res.forEach((e) => {
+          retemails.push({
             emailAddress: e.emailAddress,
             emailVerified: e.emailVerified ?? false,
           });
         });
+        setEmails(retemails);
       })
       .catch((res) => setAlert(res.toString()));
   }, []);

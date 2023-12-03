@@ -83,9 +83,7 @@ type user = {
   phoneRegistered?: boolean;
 };
 
-type Profile = {
-  users: Array<user>;
-}; // getPersonalInfoByUserId
+type Profile = Array<user>;
 
 type ProfileResponse = APIResponse<Profile>;
 
@@ -100,9 +98,7 @@ type account = {
   joint: boolean;
 };
 
-type getAccountByUserId = {
-  accounts: Array<account>;
-};
+type getAccountByUserId = Array<account>;
 
 type getAccountByUserIdResponse = APIResponse<getAccountByUserId>;
 
@@ -176,10 +172,10 @@ type statis = {
   recipientEmailId?: number;
   recipientPhoneNumber?: string;
   amount: number;
-  transactionStartTime: Date;
-  transctionFinishedTime: Date;
+  transactionStartTime: number;
+  transactionFinishedTime: number;
   isCancelled: boolean;
-  cancelledTime?: Date;
+  cancelledTime?: number;
   memo?: string;
   cancelledReason?: string;
 };
@@ -203,9 +199,7 @@ type transactionBySsnStruct = {
   password?: string;
 };
 
-type transactionBySsn = {
-  SsnStatisticsList?: Array<statis>;
-};
+type transactionBySsn = Array<statis>;
 
 type transactionBySsnResponse = APIResponse<transactionBySsn>;
 
@@ -215,9 +209,7 @@ type transactionByEmailStruct = {
   password?: string;
 };
 
-type transactionByEmail = {
-  EmailStatisticsList?: Array<statis>;
-};
+type transactionByEmail = Array<statis>;
 
 type transactionByEmailResponse = APIResponse<transactionByEmail>;
 
@@ -227,9 +219,7 @@ type transactionByPhoneStruct = {
   password?: string;
 };
 
-type transactionByPhone = {
-  EmailStatisticsList?: Array<statis>;
-};
+type transactionByPhone = Array<statis>;
 
 type transactionByPhoneResponse = APIResponse<transactionByPhone>;
 
@@ -240,9 +230,7 @@ type transactionByDateRangeStruct = {
   password?: string;
 };
 
-type transactionByDateRange = {
-  DateRangeStatisticsList?: Array<statis>;
-};
+type transactionByDateRange = { data?: Array<statis>; total?: number };
 
 type transactionByDateRangeResponse = APIResponse<transactionByDateRange>;
 
@@ -251,9 +239,7 @@ type transactionCancelledStaStruct = {
   password?: string;
 };
 
-type transactionCancelledSta = {
-  CancelledStatisticsList?: Array<statis>;
-};
+type transactionCancelledSta = Array<statis>;
 
 type transactionCancelledStaResponse = APIResponse<transactionCancelledSta>;
 
@@ -271,10 +257,10 @@ type transactionCancel = {
   recipientEmailId?: number;
   recipientPhoneNumber?: string;
   amount: number;
-  transactionStartTime: Date;
-  transctionFinishedTime: Date;
+  transactionStartTime: number;
+  transctionFinishedTime: number;
   isCancelled: boolean;
-  cancelledTime: Date;
+  cancelledTime: number;
   memo?: string;
   cancelledReason?: string;
 };
@@ -288,17 +274,10 @@ type transactionBestSellerStruct = {
   password: string;
 };
 
-type seller = {
-  transactionId: number;
-  senderUserId: number;
-  recipientUserId?: number;
-  emailAddress?: string;
-  phoneNumber?: string;
-  amount: number;
-};
-
 type transactionBestSeller = {
-  BestSellerList?: Array<seller>;
+  recipientUserId: number;
+  totalAmount: number;
+  name: string;
 };
 
 type transactionBestSellerResponse = APIResponse<transactionBestSeller>;
@@ -334,7 +313,7 @@ type searchRequest = {
   request_id: number;
   total_amount: number;
   memo?: string;
-  request_time: Date;
+  request_time: number;
 };
 type allRequestResponse = APIResponse<Array<searchRequest>>;
 
@@ -370,7 +349,7 @@ type needRequest = {
   // 个人需要付的钱
   contribution_amount: number;
   memo?: string;
-  request_time: Date;
+  request_time: number;
 };
 type needRequestResponse = APIResponse<Array<needRequest>>;
 

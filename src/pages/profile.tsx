@@ -30,14 +30,15 @@ function Profile() {
       user_id: +uid,
     })
       .then((res) => {
-        setOldPassword(res.users[0].password);
+        setOldPassword(res[0].password);
+        setOldPhone(res[0].phoneNumber);
         setResult({
-          name: res.users[0].name,
-          ssn: res.users[0].ssn,
-          balance: res.users[0].balance,
-          phoneNumber: res.users[0].phoneNumber,
+          name: res[0].name,
+          ssn: res[0].ssn,
+          balance: res[0].balance,
+          phoneNumber: res[0].phoneNumber,
+          password: res[0].password,
         });
-        setOldPhone(res.users[0].phoneNumber);
       })
       .catch((res) => setAlert(res.toString()));
   }, []);
@@ -52,14 +53,16 @@ function Profile() {
   };
 
   const handleSumbit = () => {
-    API.updateUserInfo({
+    const userInfo: updateUserInfoStruct = {
       user_id: +(uid ?? '0'),
       name: result?.name,
       oldPassword: oldPassword,
-      newPassword: result?.password,
-    })
+    };
+    if (result?.password !== '') userInfo.newPassword = result?.password;
+    API.updateUserInfo(userInfo)
       .then((res) => {
         console.log(res);
+        setOldPassword(result?.password ?? '');
         API.updatePhoneInfo({
           user_id: +(uid ?? '0'),
           phone_number: oldPhone,
@@ -67,19 +70,25 @@ function Profile() {
           isAddPhone: 'false',
           is_phone_verified: 'true',
           is_phone_registered: 'true',
-        });
-      })
-      .then((res) => {
-        console.log(res);
-        setAlert('修改成功');
-        API.updatePhoneInfo({
-          user_id: +(uid ?? '0'),
-          phone_number: result?.phoneNumber,
-          password: result?.password,
-          isAddPhone: 'true',
-          is_phone_verified: 'true',
-          is_phone_registered: 'true',
-        });
+        })
+          .then((res) => {
+            console.log(res);
+            setOldPhone(result?.phoneNumber ?? '');
+            API.updatePhoneInfo({
+              user_id: +(uid ?? '0'),
+              phone_number: result?.phoneNumber,
+              password: result?.password,
+              isAddPhone: 'true',
+              is_phone_verified: 'true',
+              is_phone_registered: 'true',
+            })
+              .then((res) => {
+                console.log(res);
+                setAlert('修改成功');
+              })
+              .catch((res) => setAlert(res.toString()));
+          })
+          .catch((res) => setAlert(res.toString()));
       })
       .catch((res) => setAlert(res.toString()));
   };
@@ -116,7 +125,7 @@ function Profile() {
                 fullWidth
                 name="ssn"
                 value={result?.ssn}
-                onChange={handleChange}
+                disabled
               />
             </Grid>
             <Grid item xs={6}>
@@ -126,7 +135,7 @@ function Profile() {
                 fullWidth
                 name="balance"
                 value={result?.balance}
-                onChange={handleChange}
+                disabled
               />
             </Grid>
             <Grid item xs={6}>

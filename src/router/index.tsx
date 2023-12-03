@@ -9,6 +9,7 @@ const Email = loadable(() => import('../pages/email'));
 const Bankcard = loadable(() => import('../pages/bankcard'));
 const Addcard = loadable(() => import('../pages/addcard'));
 const Send = loadable(() => import('../pages/send'));
+const Transaction = loadable(() => import('../pages/transaction'));
 
 const router = createHashRouter([
   {
@@ -42,6 +43,10 @@ const router = createHashRouter([
   {
     path: '/Send/',
     element: <Send />,
+  },
+  {
+    path: '/Transaction/',
+    element: <Transaction />,
   },
   {
     path: '*',

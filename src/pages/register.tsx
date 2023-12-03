@@ -52,7 +52,7 @@ export default function Register() {
     API.register(senddata)
       .then((res) => {
         localStorage.setItem('uid', res.toString());
-        location.href = '/';
+        location.href = '/#/login';
       })
       .catch((err) => {
         setAlert(err.toString());

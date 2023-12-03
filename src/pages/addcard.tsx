@@ -30,7 +30,7 @@ export default function BankAccountForm() {
       user_id: +uid,
     })
       .then((res) => {
-        setOldPassword(res.users[0].password);
+        setOldPassword(res[0].password);
       })
       .catch((res) => setAlert(res.toString()));
   }, []);

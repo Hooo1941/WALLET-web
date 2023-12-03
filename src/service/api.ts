@@ -124,7 +124,10 @@ export async function profile(option: ProfileStruct): Promise<Profile> {
   try {
     if (option.user_id === undefined)
       return Promise.reject('登录状态失效，请重新登录');
-    const response = await axios.post<ProfileResponse>('/profile', option);
+    const response = await axios.post<ProfileResponse>(
+      '/getPersonalInfoByUserId',
+      option
+    );
     if (response.data === undefined) return Promise.reject('服务器错误');
     if (response.data.status !== 0 || response.data.data === undefined)
       return Promise.reject(response.data.message ?? '服务器错误');
@@ -218,6 +221,158 @@ export async function transaction(
       return Promise.reject('登录状态失效，请重新登录');
     const response = await axios.post<transactionResponse>(
       '/transaction',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function transactionPerMon(
+  option: transactionPerMonStruct
+): Promise<transactionPerMon> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<transactionPerMonResponse>(
+      '/searchTransactionPerMonth',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function transactionBySsn(
+  option: transactionBySsnStruct
+): Promise<transactionBySsn> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<transactionBySsnResponse>(
+      '/searchTransactionBySSN',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function transactionByEmail(
+  option: transactionByEmailStruct
+): Promise<transactionByEmail> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<transactionByEmailResponse>(
+      '/searchTransactionByEmail',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function transactionByPhone(
+  option: transactionByPhoneStruct
+): Promise<transactionByPhone> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<transactionByPhoneResponse>(
+      '/searchTransactionByPhone',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function transactionByDateRange(
+  option: transactionByDateRangeStruct
+): Promise<transactionByDateRange> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<transactionByDateRangeResponse>(
+      '/searchTransactionByDateRange',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function transactionCancelledStaStruct(
+  option: transactionCancelledStaStruct
+): Promise<transactionCancelledSta> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<transactionCancelledStaResponse>(
+      '/', // TODO
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function transactionCancelledSta(
+  option: transactionCancelledStaStruct
+): Promise<transactionCancelledSta> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<transactionCancelledStaResponse>(
+      '/searchTransactionCancelled',
+      option
+    );
+    if (response.data === undefined) return Promise.reject('服务器错误');
+    if (response.data.status !== 0 || response.data.data === undefined)
+      return Promise.reject(response.data.message ?? '服务器错误');
+    return response.data.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+export async function transactionCancel(
+  option: transactionCancelStruct
+): Promise<transactionCancel> {
+  try {
+    if (option.user_id === undefined)
+      return Promise.reject('登录状态失效，请重新登录');
+    const response = await axios.post<transactionCancelResponse>(
+      '/CancelTransaction',
       option
     );
     if (response.data === undefined) return Promise.reject('服务器错误');

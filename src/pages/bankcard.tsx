@@ -23,18 +23,7 @@ export default function Bankcard() {
   if (uid === null) return <div>未登录</div>;
   const [alert, setAlert] = useState<string>('');
   const [oldPassword, setOldPassword] = useState('');
-  const [bankAccounts, setBankAccounts] = useState<Array<account>>([
-    {
-      accountId: 1,
-      bankId: 'abc',
-      accountNumber: '123456',
-      userAccountId: 1,
-      userId: 1,
-      verified: true,
-      primary: true,
-      joint: true,
-    },
-  ]);
+  const [bankAccounts, setBankAccounts] = useState<Array<account>>([]);
   // const [emails, setEmails] = useState<Array<email>>([]);
 
   useEffect(() => {
@@ -43,14 +32,14 @@ export default function Bankcard() {
       user_id: +uid,
     })
       .then((res) => {
-        setOldPassword(res.users[0].password);
+        setOldPassword(res[0].password);
       })
       .catch((res) => setAlert(res.toString()));
     API.getAccountByUserId({
       user_id: +uid,
     })
       .then((res) => {
-        setBankAccounts(res.accounts);
+        setBankAccounts(res);
       })
       .catch((res) => setAlert(res.toString()));
   }, []);
@@ -107,45 +96,48 @@ export default function Bankcard() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {bankAccounts.map((account, index) => (
-                  <TableRow key={index}>
-                    <TableCell sx={{ textAlign: 'center' }}>
-                      {account.bankId}
-                    </TableCell>
-                    <TableCell sx={{ textAlign: 'center' }}>
-                      {account.accountNumber}
-                    </TableCell>
-                    <TableCell sx={{ textAlign: 'center' }}>
-                      {account.verified ? '是' : '否'}
-                    </TableCell>
-                    <TableCell sx={{ textAlign: 'center' }}>
-                      {account.primary ? '是' : '否'}
-                    </TableCell>
-                    <TableCell sx={{ textAlign: 'center' }}>
-                      {account.joint ? '是' : '否'}
-                    </TableCell>
-                    <TableCell sx={{ textAlign: 'center' }}>
-                      <Tooltip title={'设为主账户'} arrow>
-                        <IconButton
-                          color="secondary"
-                          onClick={() =>
-                            handleChangePrimary(account.accountId, index)
-                          }
-                        >
-                          <FlagIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title={'删除卡'} arrow>
-                        <IconButton
-                          color="secondary"
-                          onClick={() => handleDelete(account.accountId, index)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {bankAccounts.length > 0 &&
+                  bankAccounts.map((account, index) => (
+                    <TableRow key={index}>
+                      <TableCell sx={{ textAlign: 'center' }}>
+                        {account.bankId}
+                      </TableCell>
+                      <TableCell sx={{ textAlign: 'center' }}>
+                        {account.accountNumber}
+                      </TableCell>
+                      <TableCell sx={{ textAlign: 'center' }}>
+                        {account.verified ? '是' : '否'}
+                      </TableCell>
+                      <TableCell sx={{ textAlign: 'center' }}>
+                        {account.primary ? '是' : '否'}
+                      </TableCell>
+                      <TableCell sx={{ textAlign: 'center' }}>
+                        {account.joint ? '是' : '否'}
+                      </TableCell>
+                      <TableCell sx={{ textAlign: 'center' }}>
+                        <Tooltip title={'设为主账户'} arrow>
+                          <IconButton
+                            color="secondary"
+                            onClick={() =>
+                              handleChangePrimary(account.accountId, index)
+                            }
+                          >
+                            <FlagIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title={'删除卡'} arrow>
+                          <IconButton
+                            color="secondary"
+                            onClick={() =>
+                              handleDelete(account.accountId, index)
+                            }
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
