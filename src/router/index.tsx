@@ -13,6 +13,7 @@ const Transaction = loadable(() => import('../pages/transaction'));
 const Statement = loadable(() => import('../pages/statement'));
 const Request = loadable(() => import('../pages/request'));
 const MyRequest = loadable(() => import('../pages/myrequest'));
+const PayRequest = loadable(() => import('../pages/payrequest'));
 
 const router = createHashRouter([
   {
@@ -62,6 +63,10 @@ const router = createHashRouter([
   {
     path: '/MyRequest/',
     element: <MyRequest />,
+  },
+  {
+    path: '/PayRequest/',
+    element: <PayRequest />,
   },
   {
     path: '*',
