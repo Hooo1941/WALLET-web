@@ -173,11 +173,13 @@ type statis = {
   recipientPhoneNumber?: string;
   amount: number;
   transactionStartTime: number;
-  transactionFinishedTime: number;
+  transctionFinishedTime: number;
   isCancelled: boolean;
   cancelledTime?: number;
   memo?: string;
   cancelledReason?: string;
+  emailAddress?: string;
+  userName?: string;
 };
 
 type transactionPerMon = {
@@ -325,7 +327,7 @@ type queryRequestStruct = {
 };
 
 // 返回的数据
-type contribution_id = {
+type contributionRequest = {
   contribution_id: number;
   // 二选一返回给我
   sender_phone_number?: string;
@@ -353,6 +355,7 @@ type requestContribution = {
   contribution_amount: number;
   memo?: string;
   request_time: number;
+  is_contributed: boolean;
 };
 
 type needRequest = Array<requestContribution>;

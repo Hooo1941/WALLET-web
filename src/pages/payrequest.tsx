@@ -55,7 +55,7 @@ export default function Payrequest() {
       isPayByWallet: paymentMethod === 'wallet',
       memo: memo,
     })
-      .then(() => setAlert('支付成功'))
+      .then(() => location.reload())
       .catch((res) => setAlert(res.toString()));
     setPassword('');
     setPayDialogOpen(false);
@@ -71,17 +71,6 @@ export default function Payrequest() {
   };
 
   useEffect(() => {
-    // TODO: delete
-    setRequests([
-      {
-        request_id: 1,
-        contribution_id: 1,
-        contribution_amount: 1,
-        name: 'test',
-        memo: 'testmemo',
-        request_time: Number(new Date()),
-      },
-    ]);
     API.needRequest({ user_id: +uid })
       .then((res) => {
         setRequests(res);
@@ -118,12 +107,22 @@ export default function Payrequest() {
                   {new Date(row.request_time).toLocaleString()}
                 </TableCell>
                 <TableCell>
-                  <Button
-                    variant="outlined"
-                    onClick={() => handlePayClick(row)}
-                  >
-                    支付
-                  </Button>
+                  {row.is_contributed ? (
+                    <Button
+                      variant="outlined"
+                      disabled
+                      onClick={() => handlePayClick(row)}
+                    >
+                      已支付
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      onClick={() => handlePayClick(row)}
+                    >
+                      支付
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

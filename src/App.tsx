@@ -51,7 +51,6 @@ function App() {
             flexGrow: 1,
             overflow: 'auto',
             marginTop: 3,
-            marginLeft: 4,
             height: '90%',
           }}
         >

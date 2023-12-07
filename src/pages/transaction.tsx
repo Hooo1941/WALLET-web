@@ -174,6 +174,27 @@ export default function Transaction() {
           setAlert(res.toString());
           setTransactions([]);
         });
+    } else if (filter === 'request') {
+      API.transactionByDateRange({
+        user_id: +uid,
+        start: new Date(0).toISOString().split('T')[0],
+        end: new Date().toISOString().split('T')[0],
+        password: oldPassword,
+      })
+        .then((res) => {
+          const data = res.data ?? [];
+          setTransactions(
+            data.filter(
+              (transaction) =>
+                transaction.emailAddress === null &&
+                transaction.recipientPhoneNumber === null
+            )
+          );
+        })
+        .catch((res) => {
+          setAlert(res.toString());
+          setTransactions([]);
+        });
     }
   };
 
@@ -258,6 +279,7 @@ export default function Transaction() {
               <MenuItem value={'phone'}>手机</MenuItem>
               <MenuItem value={'daterange'}>时间范围</MenuItem>
               <MenuItem value={'cancelled'}>已取消订单</MenuItem>
+              <MenuItem value={'request'}>群收款订单</MenuItem>
             </Select>
           </FormControl>
           {filter === 'permonth' && (
@@ -323,10 +345,11 @@ export default function Transaction() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>发送者昵称</TableCell>
+              <TableCell>支付者昵称</TableCell>
               <TableCell>收款者邮箱/手机号</TableCell>
               <TableCell>金额</TableCell>
               <TableCell>交易时间</TableCell>
+              <TableCell>是否群收款</TableCell>
               <TableCell>是否完成</TableCell>
               <TableCell>是否取消</TableCell>
               <TableCell>取消原因</TableCell>
@@ -338,11 +361,9 @@ export default function Transaction() {
             {transactions.map((row) => (
               <TableRow key={row.transactionId}>
                 {/* <TableCell>{row.transactionId}</TableCell> */}
-                <TableCell>{row.senderUserId}</TableCell>
+                <TableCell>{row.userName}</TableCell>
                 <TableCell>
-                  {row.recipientUserId ||
-                    row.recipientEmailId ||
-                    row.recipientPhoneNumber}
+                  {row.emailAddress || row.recipientPhoneNumber || '/'}
                 </TableCell>
                 <TableCell>{row.amount}</TableCell>
                 <TableCell>
@@ -352,7 +373,13 @@ export default function Transaction() {
                     .join(' ')}
                 </TableCell>
                 <TableCell>
-                  {row.transactionFinishedTime !== undefined ? '是' : '否'}
+                  {row.emailAddress === null &&
+                  row.recipientPhoneNumber === null
+                    ? '是'
+                    : '否'}
+                </TableCell>
+                <TableCell>
+                  {row.transctionFinishedTime !== undefined ? '是' : '否'}
                 </TableCell>
                 <TableCell>{row.isCancelled ? '是' : '否'}</TableCell>
                 <TableCell>{row.cancelledReason}</TableCell>

@@ -28,43 +28,20 @@ export default function Request() {
   );
   const handleViewDetails = (details: searchRequest) => {
     setDetailsDialogOpen(true);
-    setSelectedDetails([
-      {
-        contribution_id: 1,
-        contribution_amount: 1,
-        sender_phone_number: '123',
-        is_contributed: false,
-      },
-      {
-        contribution_id: 2,
-        contribution_amount: 2,
-        sender_email: '123@qq.com',
-        is_contributed: true,
-      },
-    ]);
-    // API.queryRequest({ request_id: details.request_id })
-    //   .then((res) => {
-    //     setSelectedDetails(res);
-    //     setDetailsDialogOpen(true);
-    //   })
-    //   .catch((err) => {
-    //     setAlert(err.toString());
-    //   });
+    API.queryRequest({ request_id: details.request_id })
+      .then((res) => {
+        setSelectedDetails(res);
+        setDetailsDialogOpen(true);
+      })
+      .catch((err) => {
+        setAlert(err.toString());
+      });
   };
   const handleDetailsDialogClose = () => {
     setDetailsDialogOpen(false);
   };
 
   useEffect(() => {
-    // TODO: delete
-    setRequests([
-      {
-        request_id: 1,
-        total_amount: 1,
-        memo: 'test',
-        request_time: Number(new Date()),
-      },
-    ]);
     API.allRequest({ user_id: +uid })
       .then((res) => {
         setRequests(res);
