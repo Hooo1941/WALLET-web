@@ -1,10 +1,10 @@
-type APIResponse<T> = {
+declare type APIResponse<T> = {
   status: number;
   message?: string;
   data?: T;
 };
 
-type RegisterStruct = {
+declare type RegisterStruct = {
   name?: string;
   password?: string;
   ssn?: string;
@@ -14,27 +14,27 @@ type RegisterStruct = {
   is_email_verified: string;
 };
 
-type LoginStruct = {
+declare type LoginStruct = {
   info?: string;
   password?: string;
 };
 
-type TokenResponse = APIResponse<number>; // Register and login
+declare type TokenResponse = APIResponse<number>; // Register and login
 
-type updateUserInfoStruct = {
+declare type updateUserInfoStruct = {
   user_id?: number;
   name?: string;
   newPassword?: string;
   oldPassword?: string;
 };
 
-type updateUserInfo = {
+declare type updateUserInfo = {
   userId: number;
 };
 
-type updateUserInfoResponse = APIResponse<updateUserInfo>;
+declare type updateUserInfoResponse = APIResponse<updateUserInfo>;
 
-type updateEmailInfoStruct = {
+declare type updateEmailInfoStruct = {
   user_id?: number;
   password?: string;
   email_address?: string;
@@ -43,13 +43,13 @@ type updateEmailInfoStruct = {
   is_email_registered?: string;
 };
 
-type updateEmailInfo = {
+declare type updateEmailInfo = {
   user_id: number;
 };
 
-type updateEmailInfoResponse = APIResponse<updateEmailInfo>;
+declare type updateEmailInfoResponse = APIResponse<updateEmailInfo>;
 
-type updatePhoneInfoStruct = {
+declare type updatePhoneInfoStruct = {
   user_id?: number;
   password?: string;
   phone_number?: string;
@@ -58,17 +58,17 @@ type updatePhoneInfoStruct = {
   is_phone_registered?: string;
 };
 
-type updatePhoneInfo = {
+declare type updatePhoneInfo = {
   userId: number;
 };
 
-type updatePhoneInfoResponse = APIResponse<updatePhoneInfo>;
+declare type updatePhoneInfoResponse = APIResponse<updatePhoneInfo>;
 
-type ProfileStruct = {
+declare type ProfileStruct = {
   user_id: number;
 };
 
-type user = {
+declare type user = {
   userId: number;
   name: string;
   ssn: string;
@@ -83,11 +83,11 @@ type user = {
   phoneRegistered?: boolean;
 };
 
-type Profile = Array<user>;
+declare type Profile = Array<user>;
 
-type ProfileResponse = APIResponse<Profile>;
+declare type ProfileResponse = APIResponse<Profile>;
 
-type account = {
+declare type account = {
   accountId: number;
   bankId: string;
   accountNumber: string;
@@ -98,11 +98,11 @@ type account = {
   joint: boolean;
 };
 
-type getAccountByUserId = Array<account>;
+declare type getAccountByUserId = Array<account>;
 
-type getAccountByUserIdResponse = APIResponse<getAccountByUserId>;
+declare type getAccountByUserIdResponse = APIResponse<getAccountByUserId>;
 
-type addBankInfoStruct = {
+declare type addBankInfoStruct = {
   user_id?: number;
   bank_id?: string;
   password?: string;
@@ -112,37 +112,37 @@ type addBankInfoStruct = {
   is_account_verified?: string;
 };
 
-type addBankInfo = {
+declare type addBankInfo = {
   user_account_id?: number;
 };
 
-type addBankInfoResponse = APIResponse<addBankInfo>;
+declare type addBankInfoResponse = APIResponse<addBankInfo>;
 
-type removeBankInfoStruct = {
+declare type removeBankInfoStruct = {
   user_id?: number;
   account_id?: number;
   password?: string;
 };
 
-type removeBankInfo = {
+declare type removeBankInfo = {
   user_id?: number;
 };
 
-type removeBankInfoResponse = APIResponse<removeBankInfo>;
+declare type removeBankInfoResponse = APIResponse<removeBankInfo>;
 
-type changePrimaryAccountStruct = {
+declare type changePrimaryAccountStruct = {
   user_id?: number;
   primary_account_id?: number;
   password?: string;
 };
 
-type changePrimaryAccount = {
+declare type changePrimaryAccount = {
   user_id?: number;
 };
 
-type changePrimaryAccountResponse = APIResponse<changePrimaryAccount>;
+declare type changePrimaryAccountResponse = APIResponse<changePrimaryAccount>;
 
-type transactionStruct = {
+declare type transactionStruct = {
   user_id?: number;
   email_address?: string;
   phone_number?: string;
@@ -152,20 +152,20 @@ type transactionStruct = {
   isPayByWallet?: boolean;
 };
 
-type transaction = {
+declare type transaction = {
   transaction_id?: number;
 };
 
-type transactionResponse = APIResponse<transaction>;
+declare type transactionResponse = APIResponse<transaction>;
 
-type transactionPerMonStruct = {
+declare type transactionPerMonStruct = {
   user_id?: number;
   year?: number;
   month?: number;
   password?: string;
 };
 
-type statis = {
+declare type statis = {
   transactionId: number;
   senderUserId: number;
   recipientUserId?: number;
@@ -182,7 +182,7 @@ type statis = {
   userName?: string;
 };
 
-type transactionPerMon = {
+declare type transactionPerMon = {
   year: number;
   month: number;
   maxID: Array<number>;
@@ -193,66 +193,68 @@ type transactionPerMon = {
   monthStatisticsList: Array<statis>;
 };
 
-type transactionPerMonResponse = APIResponse<transactionPerMon>;
+declare type transactionPerMonResponse = APIResponse<transactionPerMon>;
 
-type transactionBySsnStruct = {
+declare type transactionBySsnStruct = {
   user_id?: number;
   ssn?: string;
   password?: string;
 };
 
-type transactionBySsn = Array<statis>;
+declare type transactionBySsn = Array<statis>;
 
-type transactionBySsnResponse = APIResponse<transactionBySsn>;
+declare type transactionBySsnResponse = APIResponse<transactionBySsn>;
 
-type transactionByEmailStruct = {
+declare type transactionByEmailStruct = {
   user_id?: number;
   email_address?: string;
   password?: string;
 };
 
-type transactionByEmail = Array<statis>;
+declare type transactionByEmail = Array<statis>;
 
-type transactionByEmailResponse = APIResponse<transactionByEmail>;
+declare type transactionByEmailResponse = APIResponse<transactionByEmail>;
 
-type transactionByPhoneStruct = {
+declare type transactionByPhoneStruct = {
   user_id?: number;
   phone?: string;
   password?: string;
 };
 
-type transactionByPhone = Array<statis>;
+declare type transactionByPhone = Array<statis>;
 
-type transactionByPhoneResponse = APIResponse<transactionByPhone>;
+declare type transactionByPhoneResponse = APIResponse<transactionByPhone>;
 
-type transactionByDateRangeStruct = {
+declare type transactionByDateRangeStruct = {
   user_id?: number;
   start?: string;
   end?: string;
   password?: string;
 };
 
-type transactionByDateRange = { data?: Array<statis>; total?: number };
+declare type transactionByDateRange = { data?: Array<statis>; total?: number };
 
-type transactionByDateRangeResponse = APIResponse<transactionByDateRange>;
+declare type transactionByDateRangeResponse =
+  APIResponse<transactionByDateRange>;
 
-type transactionCancelledStaStruct = {
+declare type transactionCancelledStaStruct = {
   user_id?: number;
   password?: string;
 };
 
-type transactionCancelledSta = Array<statis>;
+declare type transactionCancelledSta = Array<statis>;
 
-type transactionCancelledStaResponse = APIResponse<transactionCancelledSta>;
+declare type transactionCancelledStaResponse =
+  APIResponse<transactionCancelledSta>;
 
-type transactionCancelStruct = {
+declare type transactionCancelStruct = {
   user_id: number;
   transaction_id: number;
   cancel_reason: string;
   password: string;
 };
 
-type transactionCancel = {
+declare type transactionCancel = {
   transactionId: number;
   senderUserId: number;
   recipientUserId?: number;
@@ -267,35 +269,35 @@ type transactionCancel = {
   cancelledReason?: string;
 };
 
-type transactionCancelResponse = APIResponse<transactionCancel>;
+declare type transactionCancelResponse = APIResponse<transactionCancel>;
 
-type transactionBestSellerStruct = {
+declare type transactionBestSellerStruct = {
   user_id: number;
   start: string;
   end: string;
   password: string;
 };
 
-type transactionBestSeller = {
+declare type transactionBestSeller = {
   recipientUserId: number;
   totalAmount: number;
   name: string;
 };
 
-type transactionBestSellerResponse = APIResponse<transactionBestSeller>;
+declare type transactionBestSellerResponse = APIResponse<transactionBestSeller>;
 
 // TODO: 以下是群收款的接口
 // 发起群收款
 // 发送数据
 // 一个群收款有多个contribution
-type contributionStruct = {
+declare type contributionStruct = {
   // 只会发送下列两个字段之一
   sender_phone_number?: string;
   sender_email?: string;
   contribution_amount: number;
 };
 
-type requestStruct = {
+declare type requestStruct = {
   user_id: number;
   total_amount: number;
   memo: string;
@@ -303,31 +305,31 @@ type requestStruct = {
 };
 
 // 若群收款成功，只需要返回空对象{}，失败返回错误信息
-type requestResponse = APIResponse<object>;
+declare type requestResponse = APIResponse<object>;
 
 // 查询我发起的所有群收款
-type allRequestStruct = {
+declare type allRequestStruct = {
   user_id: number;
 };
 
 // 返回的数据
-type searchRequest = {
+declare type searchRequest = {
   request_id: number;
   total_amount: number;
   memo?: string;
   request_time: number;
 };
 
-type allRequest = Array<searchRequest>;
-type allRequestResponse = APIResponse<allRequest>;
+declare type allRequest = Array<searchRequest>;
+declare type allRequestResponse = APIResponse<allRequest>;
 
 // 查询指定id的群收款
-type queryRequestStruct = {
+declare type queryRequestStruct = {
   request_id: number;
 };
 
 // 返回的数据
-type contributionRequest = {
+declare type contributionRequest = {
   contribution_id: number;
   // 二选一返回给我
   sender_phone_number?: string;
@@ -337,16 +339,16 @@ type contributionRequest = {
   is_contributed: boolean;
 };
 
-type queryRequest = Array<contributionRequest>;
-type queryRequestResponse = APIResponse<queryRequest>;
+declare type queryRequest = Array<contributionRequest>;
+declare type queryRequestResponse = APIResponse<queryRequest>;
 
 // 查看需要我付的群收款(已经付过的也要显示)
-type needRequestStruct = {
+declare type needRequestStruct = {
   user_id: number;
 };
 
 // 返回的数据
-type requestContribution = {
+declare type requestContribution = {
   request_id: number;
   contribution_id: number;
   // 收款人
@@ -358,11 +360,11 @@ type requestContribution = {
   is_contributed: boolean;
 };
 
-type needRequest = Array<requestContribution>;
-type needRequestResponse = APIResponse<needRequest>;
+declare type needRequest = Array<requestContribution>;
+declare type needRequestResponse = APIResponse<needRequest>;
 
 // 付款
-type contributeStruct = {
+declare type contributeStruct = {
   user_id: number;
   contribution_id: number;
   memo?: string;
@@ -371,4 +373,4 @@ type contributeStruct = {
 };
 
 // 成功返回空数据
-type contributeResponse = APIResponse<object>;
+declare type contributeResponse = APIResponse<object>;
